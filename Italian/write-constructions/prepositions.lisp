@@ -36,7 +36,7 @@
                (unit-name (format nil "?~(~a~)-word" safestring)))
           (format out "~%~%(def-fcg-cxn ~a" name)
           (format out "~%             ((~(~a~)" unit-name)
-          (format out "~%               (lex-id ~(~a~)))" lex-id)
+          (format out "~%               (lex-id ~a))" lex-id)
           (format out "~%              <-")
           (format out "~%              (~(~a~)" unit-name)
           (format out "~%               --")
