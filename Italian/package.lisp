@@ -38,4 +38,5 @@
    :nlp-tools
    :fcg)
   (:import-from :common-lisp-user ife-pathname)
+  (:import-from :fcg morph lex cxn)
   (:documentation "This package contains the main grammar for semantic frames from Italian."))

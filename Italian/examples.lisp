@@ -19,9 +19,18 @@
 
 (in-package :ife)
 
+;; First time? Create the grammar files first:
+; (write-all-constructions)
+
+;; Load the grammar:
 ; (load-italian-frame-extractor)
+
+;; Activate the web interface:
 ; (activate-monitor trace-fcg)
 
 (comprehend "un numero eccessivo di discendenti tale da comportare uno spezzettamento del patrimonio familiare" :cxn-inventory *italian-frame-extractor*)
 
-(comprehend "Le infezioni stanno diminuendo perché i vaccini sono efficienti." :cxn-inventory *italian-frame-extractor*)
+(extract-semantic-frames "Le infezioni stanno diminuendo perché i vaccini sono efficienti." 
+                         :phrase-based
+                         :cxn-inventory *italian-frame-extractor*
+                         :frame-dev-monitor t)

@@ -31,5 +31,6 @@
                 :serial t
                 :components ((:file "output-utils")
                              (:file "prepositions")
+                             (:file "frame-evoking")
                              (:file "write-constructions")))
                (:file "load")))

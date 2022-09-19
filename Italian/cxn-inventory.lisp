@@ -16,6 +16,39 @@
 
 (in-package :ife)
 
+;;; ----------------------------------------------------------------------------
+;;; Temporary de-render method
+;;; ----------------------------------------------------------------------------
+
+(defmethod de-render ((utterance string)
+                      (mode (eql :italian-hybrid-with-lemmas))
+                      &key cxn-inventory (model "it") &allow-other-keys)
+  (declare (ignorable mode))
+  (let* ((transient-structure (de-render utterance :italian-hybrid
+                                         :cxn-inventory cxn-inventory
+                                         :model model))
+         (units (left-pole-structure transient-structure))
+         (root (get-root units))
+         (lemmas (get-penelope-lemmas utterance :model model))
+         (units-expanded-with-lemmas (loop for unit in (remove root units :test #'equal)
+                                           for lemma in lemmas
+                                           collect `(,(unit-name unit)
+                                                     ,@(loop for feature in (unit-body unit)
+                                                             collect (if (string= (symbol-name 
+                                                                                   (feature-name feature))
+                                                                                  "SYN-CAT")
+                                                                       `(,(feature-name feature)
+                                                                         ,(cons `(lemma ,lemma)
+                                                                                (feature-value feature)))
+                                                                       feature)))))
+         (new-unit-structure (cons root units-expanded-with-lemmas)))
+    (setf (left-pole-structure transient-structure) new-unit-structure)
+    transient-structure))
+
+;;; ----------------------------------------------------------------------------
+;;; CXN-INVENTORY
+;;; ----------------------------------------------------------------------------
+
 (defvar *italian-frame-extractor* nil "Global variable for the Italian frame extractor.")
 
 (def-fcg-constructions italian-frame-extractor
@@ -32,7 +65,7 @@
 
                        ;; Render and De-rendering
                        ;; ----------------------------------------------------------------------------------
-                       (:de-render-mode . :italian-hybrid)
+                       (:de-render-mode . :italian-hybrid-with-lemmas)
                        ;; ----------------------------------------------------------------------------------
                        ;; Form predicates
                        ;; ----------------------------------------------------------------------------------
@@ -41,8 +74,8 @@
                        ;; Construction Sets
                        ;; ----------------------------------------------------------------------------------
                        (:production-order hashed-meaning cxn hashed-lex-id)
-                       (:parse-order morph lex-id cxn)
-                       (:hashed-labels morph hashed-meaning lex-id)
+                       (:parse-order morph lex cxn)
+                       (:hashed-labels morph lex)
                        ;; ----------------------------------------------------------------------------------
                        ;; Node tests
                        ;; ----------------------------------------------------------------------------------
@@ -60,6 +93,11 @@
                                  (:with-search-debug-data . t))
   :hierarchy-features (dependents)
 
+  ;; Inform fcg-hybrids about which tag-sets are used by the neurostatistical parser:
   (fcg::configure-tag-sets *italian-frame-extractor*
                            :pos-tag-set fcg::*italian-pos-tag-set*
-                           :fcg-categories fcg::*italian-fcg-categories*))
+                           :fcg-categories fcg::*italian-fcg-categories*)
+
+  ;; Activate the frame extractor:
+  (activate-frame-extractor :cxn-inventory *italian-frame-extractor*
+                            :frame-feature 'sem-frame))
