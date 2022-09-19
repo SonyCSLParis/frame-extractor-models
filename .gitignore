@@ -1,3 +1,4 @@
 *.64xfasl
 /Italian/constructions/
 *.lisp~
+*.asd~
