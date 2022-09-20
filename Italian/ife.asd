@@ -33,4 +33,7 @@
                              (:file "prepositions")
                              (:file "frame-evoking")
                              (:file "write-constructions")))
-               (:file "load")))
+               (:file "load")
+               (:module "tests"
+                :serial t
+                :components ((:file "test-ife")))))

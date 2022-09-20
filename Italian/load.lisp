@@ -16,6 +16,9 @@
 ;;;     You should have received a copy of the GNU General Public License
 ;;;     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ;;; ----------------------------------------------------------------------------
+;;;
+;;; Grammar is written and loaded at the end of this file.
+;;; ----------------------------------------------------------------------------
 
 (in-package :ife)
 
@@ -37,9 +40,17 @@
   (load-lisp-files "constructions/frame-evoking-elements/"))
 ;; (load-frame-evoking-elements)
 
+(defun load-grammar ()
+  (load-lisp-files "constructions/"))
+
 (defun load-italian-frame-extractor ()
   (make-italian-frame-extractor-cxns)
   (load-prepostions)
   (load-frame-evoking-elements)
+  (load-grammar)
   *italian-frame-extractor*)
-;; (load-italian-frame-extractor)
+
+;; Writing and loading:
+(progn
+  (write-all-constructions)
+  (load-italian-frame-extractor))

@@ -19,6 +19,19 @@
 
 (in-package :ife)
 
+
+
+(deftest test-ife ()
+
+
+
+
+(extract-semantic-frames "un numero eccessivo di discendenti tale da comportare uno spezzettamento del patrimonio familiare"
+                         :dependency-based
+                         :cxn-inventory *italian-frame-extractor*
+                         :frame-dev-monitor t)
+
+
 (extract-semantic-frames "il problema è che questo comporterebbe gravi problemi di governance:"
                          :phrase-based 
                          :cxn-inventory *italian-frame-extractor*
