@@ -19,17 +19,9 @@
 
 (in-package :ife)
 
-(defun read-test-data (filename)
-  (let (data)
-    (with-open-file (in (ife-pathname (format nil "tests/~a.txt" filename)))
-      (loop for input = (read-line in nil)
-            while input
-            do (push input data)))
-    data))
-
 (deftest test-ife-causation ()
-  (let ((test-sentences (read-test-data "test-causation-sentences"))
-        (test-solutions (read-test-data "test-causation-solutions")))
+         (let ((test-sentences (fe-read-test-data (ife-pathname "tests/test-causation-sentences.txt")))
+               (test-solutions (fe-read-test-data (ife-pathname "tests/test-causation-solutions.txt"))))
     (loop for sentence in test-sentences
           for solution in test-solutions
           for extracted-frame = (first (extract-semantic-frames sentence :dependency-based
