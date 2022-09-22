@@ -14,14 +14,14 @@
 ;;;     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ;;; ----------------------------------------------------------------------------
 
-; (ql:quickload :frame-extractor)
-; (ql:quickload :efe)
+;; (ql:quickload :frame-extractor)
+;; (ql:quickload :efe)
 
 (in-package :efe)
 
 (activate-monitor trace-fcg)
 
-(extract-semantic-frames "In his speech, he sought to ridicule evidence of growing draught and heat waves due to climate change."
-                         :phrase-based
-                         :cxn-inventory *english-frame-extractor*
-                         :frame-dev-monitor t)
+(extract-english-semantic-frames "This will probably result in much more of an emphasis on countering disinformation and lead to much more intelligence gathering in collaboration with Europeans.")
+
+;; TODDO: handle semantics of double-verb-construction
+(extract-english-semantic-frames "Current Coalition Direct Action climate policies are projected to result in increased greenhouse gas emissions, albeit at a level that might allow Australia to meet its 2020 target because of accounting rules.")

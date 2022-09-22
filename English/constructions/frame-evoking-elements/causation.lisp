@@ -165,6 +165,172 @@
                :attributes (:label hashed-lex-id :lex-id lead)
                :cxn-inventory *english-frame-extractor*)
 
+;; RESULT IN
+(def-fcg-cxn RESULT->results-morph
+             ((?results-unit
+               (footprints (number morph)))
+              <-
+              (?results-unit
+               (lex-id result)
+               (footprints (not number morph))
+               (syn-cat (verb-form base-form)
+                        (lex-class verb)
+                        (finite +)
+                        (agreement (- - + -)))
+               --
+               (HASH form ((string ?results-unit "results")))))
+            :disable-automatic-footprints t
+            :attributes (:label hashed-string :string "results")
+            :cxn-inventory *english-frame-extractor*)
+
+(def-fcg-cxn RESULT->resulting-morph
+             ((?resulting-unit
+               (footprints (number morph)))
+              <-
+              (?resulting-unit
+               (footprints (not number morph))
+               (lex-id result)
+               (syn-cat (verb-form ing-form)
+                        (lex-class verb)
+                        (finite -)
+                        (agreement ?agr))
+               --
+               (HASH form ((string ?resulting-unit "resulting")))))
+            :disable-automatic-footprints t
+            :attributes (:label hashed-string :string "resulting")
+            :cxn-inventory *english-frame-extractor*)
+
+(def-fcg-cxn RESULT->result-morph
+             ((?result-unit
+               (footprints (number morph)))
+              <-
+              (?result-unit
+               (lex-id result)
+               (footprints (not number morph))
+               (syn-cat (verb-form base-form)
+                        (lex-class verb)
+                        (finite ?finite)
+                        (agreement ?agr))
+               --
+               (HASH form ((string ?result-unit "result")))))
+            :disable-automatic-footprints t
+            :attributes (:label hashed-string :string "result")
+            :cxn-inventory *english-frame-extractor*)
+
+(def-fcg-cxn RESULT->resulted-morph
+             ((?resulted-unit
+               (footprints (number morph)))
+              <-
+              (?resulted-unit
+               (lex-id result)
+               (footprints (not number morph))
+               (syn-cat (verb-form ed-form)
+                        (lex-class verb)
+                        (finite ?finite)
+                        (agreement ?agr))
+               --
+               (HASH form ((string ?resulted-unit "resulted")))))
+            :disable-automatic-footprints t
+            :attributes (:label hashed-string :string "resulted")
+            :cxn-inventory *english-frame-extractor*)
+
+(def-frame-cxn result-in-lex
+               (<-
+                (?result
+                 (sem-frame (causation
+                             (cause ?cause-phrase)
+                             (effect ?some-parent)))
+                 (syn-cat (subtype prepositional-verb))
+                 --
+                 (lex-id result)
+                 (syn-cat (verb-form ?verb-form))
+                 (parent ?vp)
+                 (hash form ((string ?in "in")
+                             (meets ?result ?in ?vp)))))
+               :attributes (:label hashed-lex-id :lex-id result)
+               :cxn-inventory *english-frame-extractor*)
 
 
+;; BRING ABOUT
+(def-fcg-cxn BRING->brings-morph
+             ((?brings-unit
+               (footprints (number morph)))
+              <-
+              (?brings-unit
+               (lex-id bring)
+               (footprints (not number morph))
+               (syn-cat (verb-form base-form)
+                        (lex-class verb)
+                        (finite +)
+                        (agreement (- - + -)))
+               --
+               (HASH form ((string ?brings-unit "brings")))))
+            :disable-automatic-footprints t
+            :attributes (:label hashed-string :string "brings")
+            :cxn-inventory *english-frame-extractor*)
 
+(def-fcg-cxn BRING->bringing-morph
+             ((?bringing-unit
+               (footprints (number morph)))
+              <-
+              (?bringing-unit
+               (footprints (not number morph))
+               (lex-id bring)
+               (syn-cat (verb-form ing-form)
+                        (lex-class verb)
+                        (finite -)
+                        (agreement ?agr))
+               --
+               (HASH form ((string ?bringing-unit "bringing")))))
+            :disable-automatic-footprints t
+            :attributes (:label hashed-string :string "bringing")
+            :cxn-inventory *english-frame-extractor*)
+
+(def-fcg-cxn BRING->bring-morph
+             ((?bring-unit
+               (footprints (number morph)))
+              <-
+              (?bring-unit
+               (lex-id bring)
+               (footprints (not number morph))
+               (syn-cat (verb-form base-form)
+                        (lex-class verb)
+                        (finite ?finite)
+                        (agreement ?agr))
+               --
+               (HASH form ((string ?bring-unit "bring")))))
+            :disable-automatic-footprints t
+            :attributes (:label hashed-string :string "bring")
+            :cxn-inventory *english-frame-extractor*)
+
+(def-fcg-cxn BRING->brought-morph
+             ((?brought-unit
+               (footprints (number morph)))
+              <-
+              (?brought-unit
+               (lex-id bring)
+               (footprints (not number morph))
+               (syn-cat (verb-form ed-form)
+                        (lex-class verb)
+                        (finite -)
+                        (agreement ?agr))
+               --
+               (HASH form ((string ?brought-unit "brought")))))
+            :disable-automatic-footprints t
+            :attributes (:label hashed-string :string "brought")
+            :cxn-inventory *english-frame-extractor*)
+
+(def-frame-cxn bring-about-lex
+               (<-
+                (?bring
+                 (sem-frame (causation
+                             (cause ?cause-phrase)
+                             (effect ?some-parent)))
+                 (syn-cat (subtype prepositional-verb))
+                 --
+                 (parent ?vp)
+                 (lex-id bring)
+                 (hash form ((string ?about "about")
+                             (meets ?bring ?about ?vp)))))
+               :attributes (:label hashed-lex-id :lex-id bring)
+               :cxn-inventory *english-frame-extractor*)
